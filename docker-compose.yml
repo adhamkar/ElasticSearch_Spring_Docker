@@ -24,6 +24,8 @@ services:
     mem_limit: 4g
     networks:
       - es-network
+    volumes:
+      - erp_volume_data:/var/opt/erp
 
   kibana:
     image: kibana:7.9.2
@@ -39,8 +41,14 @@ services:
       - ELASTICSEARCH_PASSWORD=1234
     networks:
       - es-network
+    volumes:
+      - erp_volume_data:/var/opt/erp
 
 
 networks:
   es-network:
     driver: bridge
+
+volumes:
+  erp_volume_data:
+    driver: local

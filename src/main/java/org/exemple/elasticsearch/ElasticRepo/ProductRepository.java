@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductRepository extends ElasticsearchRepository<Product, String> {
     @Query("{\"multi_match\": {\"query\": \"?0\", \"fields\": [\"name\", \"description\", \"category\"],\"fuzziness\": \"AUTO\"}}")
     List<Product> searchByMultipleFields(String query);
+    List<Product> findAll();
 }
