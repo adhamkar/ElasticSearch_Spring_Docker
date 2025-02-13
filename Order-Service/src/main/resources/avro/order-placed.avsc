@@ -1,0 +1,25 @@
+{
+  "type": "record",
+  "name": "OrderPlacedEvent",
+  "namespace": "org.exemple.orderservice.Order.event",
+  "fields": [
+    { "name": "status", "type": "string" },
+    {
+      "name": "totalAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 38,
+        "scale": 18
+      }
+    },
+    { "name": "userId", "type": "long" },
+    {
+      "name": "createdAt",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      }
+    }
+  ]
+}
