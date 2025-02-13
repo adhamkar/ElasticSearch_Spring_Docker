@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,23 +46,21 @@ public class CategorySchedul {
         });
         categoryRepository.saveAll(categoryList);
     }
+
     @Async("taskExecutor")
     @Scheduled(fixedDelay = 2000)
     public void addProductsToCategory() {
         if(!dataChange){
             return;
         }
-
         // Fetch all products and categories once
         List<Product> products = (List<Product>) productRepository.findAll();
         List<Category> categories = (List<Category>) categoryRepository.findAll();
-
         if (products.equals(lastProductState)) {
             dataChange = false;
             return;
         }
         lastProductState = new ArrayList<>(products);
-
         // Group products by categoryId
         Map<String, List<Product>> productsByCategoryId = products.stream()
                 .collect(Collectors.groupingBy(Product::getCategoryId));
